@@ -1,0 +1,5 @@
+CIFAR-10/*
+
+*.pdf
+*.ipynb
+.ipynb_checkpoints/*

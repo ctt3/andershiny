@@ -7,16 +7,14 @@ import time
 
 
 def main():
-  data = pd.read_csv("./CIFAR-10/train_raw.csv")
+  data = pd.read_csv("../train_raw.csv")
   pixels = data.iloc[:,0:data.shape[1]-1].as_matrix()
   targets = data.iloc[:,data.shape[1]-1]
 
   forest = RandomForestClassifier(n_estimators=150, oob_score=True)
   forest.fit(pixels,targets)
 
-  score = forest.oob_score_
-  name = "forest_"+str(score)+"_"+str(int(time.time()))+".p"
+  pickle.dump( pixels, open("pixels.p", "w") )
+  pickle.dump( forest, open("forest.p", "w") )
 
-  pickle.dump( forest, open(name, "w") )
-
-if __name__ == __main__: main()
+if __name__ == "__main__": main()

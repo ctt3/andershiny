@@ -4,21 +4,22 @@ library(shiny)
 shinyUI(fluidPage(
 
   # Application title
-  titlePanel("Hello Shiny!"),
+  titlePanel("Charlie Thiry's Random Forest"),
 
-  # Sidebar with a slider input for the number of bins
+  # Sidebar with a slider input for the image
   sidebarLayout(
     sidebarPanel(
-      sliderInput("bins",
-                  "Number of bins:",
-                  min = 1,
-                  max = 50,
-                  value = 30)
+      sliderInput("n",
+                  "Image:",
+                  min = 1000,
+                  max = 1049,
+                  value = 1000)
     ),
 
-    # Show a plot of the generated distribution
+    # Show the image
     mainPanel(
-      plotOutput("distPlot")
+      plotOutput("preImage"),
+      h3(textOutput("prediction"))
     )
   )
 ))

@@ -3,18 +3,22 @@ library(shiny)
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
 
-  # Expression that generates a histogram. The expression is
-  # wrapped in a call to renderPlot to indicate that:
-  #
-  #  1) It is "reactive" and therefore should re-execute automatically
-  #     when inputs change
-  #  2) Its output type is a plot
+  output$preImage <- renderImage({
+    # When input$n is 3, filename is ./images/image3.jpeg
+    filename <- normalizePath(file.path('./images',
+                              paste(input$n, '.png', sep='')))
+ 
+    # Return a list containing the filename and alt text
+    list(src = filename,
+         alt = paste("Image number", input$n),
+         width = 400,
+         height = 300)
 
-  output$distPlot <- renderPlot({
-    x    <- faithful[, 2]  # Old Faithful Geyser data
-    bins <- seq(min(x), max(x), length.out = input$bins + 1)
-
-    # draw the histogram with the specified number of bins
-    hist(x, breaks = bins, col = 'darkgray', border = 'white')
+  }, deleteFile = FALSE)
+  
+  output$prediction <- renderText({ 
+      
+      paste("Prediction: ", system2("python", args=c("predict_image.py", input$n), stdout=TRUE)) 
+  
   })
 })
